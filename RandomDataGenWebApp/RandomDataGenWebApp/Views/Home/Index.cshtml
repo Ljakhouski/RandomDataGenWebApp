@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+    div div{
+        margin: 10px;
+    }
+    .ctrl {
+        width: 200px;
+        position: relative;
+    }
+
+    input {
+        display: block;
+        width: 100%;
+    }
+
+    .good {
+        display: inline-block;
+        vertical-align: top;
+        width: 100px;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid silver;
+    }
+
+        .good .option {
+            display: none;
+        }
+</style>
+
+<div class="text-center">
+    <div class="myPanel">
+        <div>
+            <label for="cars">Choose a country:</label>
+            <select name="country" id="country">
+                <option value="USA">USA</option>
+                <option value="Russia">Russia</option>
+                <option value="UK">UK</option>
+            </select>
+        </div>
+
+        <div>
+            <span id="view">0</span>
+            <input id="num" type=number min="0" max="1000" step="100" value="0">
+            <input id="range" type="range" min="0" max="1000" step="100" value="0">
+        </div>
+
+        <div>
+            <label> Seed: </label>
+            <input type="number" required id="seed_input"/>
+        </div>
+
+        <button class="btn-primary"  onclick="generate()"> Generate </button>
+    </div>
+</div>
+
+<script>
+    const num = document.getElementById('num');
+    const rng = document.getElementById('range');
+    const view = document.getElementById('view');
+    const goods = document.querySelectorAll('.good');
+    const set = val => {
+        num.value = val;
+        rng.value = val;
+        view.textContent = val;
+        [...goods].forEach(good => {
+            const options = good.querySelectorAll('.option');
+            [...options].forEach(option => {
+                option.style.display = val >= +option.dataset.from ? 'block' : 'none';
+            });
+        });
+    }
+
+    rng.addEventListener('input', () => set(rng.value));
+    num.addEventListener('change', () => set(num.value));
+
+    function generate() {
+        $.ajax({
+            type: "get",
+            url: "/home/generate/",
+            data: {
+                seed: document.getElementById("seed_input").value, // < note use of 'this' here
+                country: document.getElementById("country").value,
+                errVal: document.getElementById("range").value,
+            },
+            success: function(data, textstatus) {
+            
+                alert(data);
+            }
+        });
+    }
+</script>

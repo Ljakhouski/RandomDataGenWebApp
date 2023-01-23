@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1uzBsIQjsc8Leb9+zZpyRmLZ6tH5IC1CTfMaQv2UEcUDKAW62oePiN4NmxzSOVzwntM6XeJr5ZA7h340WgmHrA==",
+  "success": true,
+  "projectFilePath": "C:\\source\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alex\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
