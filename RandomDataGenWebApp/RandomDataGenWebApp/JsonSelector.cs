@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RandomDataGenWebApp.Models;
 using System.Reflection;
 using System.Text.Json;
 
@@ -26,6 +27,12 @@ namespace RandomDataGenWebApp
                 List<Root> items = JsonConvert.DeserializeObject<List<Root>>(json);
 
                 var new_ = from item in items where item.origin.Contains("American") select item.name;
+
+                var v = new SourceDataModel();
+                v.UK_names = (List<string>)new_;
+                v.USA_names = v.UK_names;
+
+
             }
 
 

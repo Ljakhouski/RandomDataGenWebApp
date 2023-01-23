@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RandomDataGenWebApp.Models;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace RandomDataGenWebApp.Controllers
 {
@@ -24,12 +25,26 @@ namespace RandomDataGenWebApp.Controllers
         }
 
         [HttpGet]
-        public int Generate(int seed, string country, int errVal)
+        public string Generate(int seed, int page, string country, int errVal)
         {
-            int rd = new Random(seed).Next();
-            JsonSelector.Select();
-            return rd;
-            //return View();
+           // JsonSelector.Select();
+            var arr = new TableRowModel[10];
+            for(int i = 0; i< arr.Length; i++)
+            {
+                
+                arr[i] = new TableRowModel()
+                {
+                    Address = new Random(seed * (page +1)* (i+1)).Next().ToString(),
+                    Name = new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
+                    Number = page*10 + i,
+                    PhoneNumber = "+36" + new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
+                    RandomId = new Random(seed * (page + 1) * (i + 1)).Next()
+                };
+                string S_ = JsonSerializer.Serialize(arr[i]);
+            }
+            
+            string S = JsonSerializer.Serialize(arr);
+            return JsonSerializer.Serialize(arr);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
