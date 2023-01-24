@@ -58,7 +58,7 @@
             <input type="number" required id="seed_input" />
         </div>
 
-        <button class="btn-primary" onclick="generate(1)"> Generate </button> <br /> <br />
+        <button class="btn-primary" onclick="reset()"> Generate </button> <br /> <br />
 
         <table class="table table-dark" id="myTable">
             <thead>
@@ -71,7 +71,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="tId">
             </tbody>
         </table>
 
@@ -103,12 +103,14 @@
 
     function showVal(newVal) {
         document.getElementById("num").value = newVal * 100;
+        reset();
     }
     function set__(numVal) {
         document.getElementById('range').value = numVal / 100;
+        reset();
     }
 
-    function generate(page) {
+    function generate() {
         $.ajax({
             type: "get",
             url: "/home/generate/",
@@ -146,13 +148,19 @@
 
                 currentPage++;
 
-                if (page == 0) {
-                    generate(1);
+                if (currentPage == 1) {
+                    generate();
                 }
             }
         });
     }
-
+    function reset()
+    {
+        alert("!");
+        currentPage=0;
+        $("#myTable").find("tr:gt(0)").remove();
+        generate();
+    }
 
     // обработка события скроллинга
 

@@ -27,27 +27,35 @@ namespace RandomDataGenWebApp
 
         private string getRandomizeString(string S, double chance, int seed, int page, int number, string country)
         {
+            if (S.Length < 2)
+                return S;
+
             int resultSeed = seed * (page + 1) * (number + 1);
             var rand = new Random(resultSeed);
 
             int ch = (int)Math.Truncate(chance);
 
-            if (Test(chance-ch, rand)) chance++;
+            if (Test(chance - ch, rand)) chance++;
 
             for (int i = 0; i < chance; i++)
             {
                 switch (rand.Next(2))
                 {
                     case 0:
-                        S.Insert(rand.Next(0, S.Length - 1), getRandChar(rand, country == "Russia"));
+                        S = S.Insert(rand.Next(0, S.Length - 1), getRandChar(rand, country == "Russia"));
                         break;
                     case 1:
-                        int index = rand.Next(0, S.Length - 2);
-                        S.Insert(index, S[rand.Next(0, S.Length - 1)].ToString());
-                        S.Remove(index);
+                        if (S.Length < 2)
+                            break;
+
+                        int index = rand.Next(0, S.Length - 1);
+                        S = S.Insert(index, S[rand.Next(0, S.Length - 1)].ToString());
+
+                        S = S.Remove(index, 1);
                         break;
                     case 2:
-                        S.Remove(rand.Next(0, S.Length - 1));
+                        if (S.Length > 2)
+                            S = S.Remove(rand.Next(0, S.Length - 1), 1);
                         break;
                     default:
                         break;
@@ -56,12 +64,12 @@ namespace RandomDataGenWebApp
             return S;
         }
 
-        private string getRandChar(Random rand, bool isEnUs = false)
+        private string getRandChar(Random rand, bool isEnUs)
         {
             string enUs = "abcdefghijklmnopqrstuvwxyz1234567890";
             string ru = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя1234567890";
 
-            if (isEnUs)
+            if (!isEnUs)
                 return enUs[rand.Next(enUs.Length - 1)].ToString();
             else
                 return ru[rand.Next(ru.Length - 1)].ToString();
