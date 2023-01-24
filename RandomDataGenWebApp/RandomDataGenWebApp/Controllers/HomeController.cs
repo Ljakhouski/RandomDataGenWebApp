@@ -26,7 +26,7 @@ namespace RandomDataGenWebApp.Controllers
         }
 
         [HttpGet]
-        public string Generate(int seed, int page, string country, int errVal)
+        public string Generate(int seed, int page, string country, double errVal)
         {
 
            // JsonSelector.Select();

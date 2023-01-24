@@ -27,13 +27,13 @@
         border: 1px solid silver;
     }
 
-    .good .option {
-        display: none;
-    }
-    .table table-dark{
-        margin: 200px;   
-    }
+        .good .option {
+            display: none;
+        }
 
+    .table table-dark {
+        margin: 200px;
+    }
 </style>
 
 <div class="text-center">
@@ -49,8 +49,8 @@
 
         <div>
             <span id="view">0</span>
-            <input id="num" type=number min="0" max="1000" step="100" value="0">
-            <input id="range" type="range" min="0" max="1000" step="100" value="0">
+            <input id="num" type=number min="0" max="1000" step="0.25" value="0">
+            <input id="range" type="range" onchange="showVal(this.value)" min="0" max="10" step="0.25" value="0">
         </div>
 
         <div>
@@ -72,7 +72,6 @@
             </thead>
 
             <tbody>
-              
             </tbody>
         </table>
 
@@ -81,7 +80,8 @@
 
 <script>
     let currentPage = 0;
-    const num = document.getElementById('num');
+
+    /*const num = document.getElementById('num');
     const rng = document.getElementById('range');
     const view = document.getElementById('view');
     const goods = document.querySelectorAll('.good');
@@ -97,8 +97,16 @@
         });
     }
 
-    rng.addEventListener('input', () => set(rng.value));
-    num.addEventListener('change', () => set(num.value));
+    rng.addEventListener('input', () => set(rng.value/100));*/
+    num.addEventListener('change', () => set__(num.value));
+
+
+    function showVal(newVal) {
+        document.getElementById("num").value = newVal * 100;
+    }
+    function set__(numVal) {
+        document.getElementById('range').value = numVal / 100;
+    }
 
     function generate(page) {
         $.ajax({
@@ -111,12 +119,11 @@
                 page: currentPage
             },
             success: function (data, textstatus) {
-                for (let i = 0; i < 10; i++)
-                {
+                for (let i = 0; i < 10; i++) {
                     debugger;
                     //debug(data);
                     console.log(data);
-                    
+
 
                     let table = document.getElementById("myTable");
 
@@ -139,16 +146,15 @@
 
                 currentPage++;
 
-                if (page == 0)
-                {
+                if (page == 0) {
                     generate(1);
                 }
             }
         });
     }
 
-      
-        // обработка события скроллинга
+
+    // обработка события скроллинга
 
 
     window.addEventListener("scroll", function () {
@@ -159,22 +165,19 @@
     }, false);
 
     let wheel_block = 0;
-    function wheel_handle()
-    {
-        if (wheel_block<3)
-        {
+    function wheel_handle() {
+        if (wheel_block < 3) {
             wheel_block++;
             generate(currentPage);
         }
-        else
-        {
+        else {
             document.getElementById('myTable').removeEventListener("wheel");
         }
-        
+
     }
     document.getElementById('myTable').addEventListener("wheel", wheel_handle, false);
-   // const el = document.querySelector('myTable');
+       // const el = document.querySelector('myTable');
 
-    //el.onwheel = wheel_handle;
+        //el.onwheel = wheel_handle;
 
 </script>

@@ -1,4 +1,5 @@
-﻿using RandomDataGenWebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using RandomDataGenWebApp.Models;
 using System;
 using System.Text.Json;
 
@@ -16,11 +17,60 @@ namespace RandomDataGenWebApp
         }
         public TableRowModel GetRow(int seed, int page, int number, string country, double errSmooth)
         {
-            var t = MakeRow(seed, page, number, country);
+            var t = makeRow(seed, page, number, country);
+
+            t.Address = getRandomizeString(t.Address, errSmooth, seed, page, number, country);
+            t.Name = getRandomizeString(t.Name, errSmooth, seed, page, number, country);
+            t.PhoneNumber = getRandomizeString(t.PhoneNumber, errSmooth, seed, page, number, country);
             return t;
         }
 
-        public TableRowModel MakeRow(int seed, int page, int number, string country)
+        private string getRandomizeString(string S, double chance, int seed, int page, int number, string country)
+        {
+            int resultSeed = seed * (page + 1) * (number + 1);
+            var rand = new Random(resultSeed);
+
+            int ch = (int)Math.Truncate(chance);
+
+            if (Test(chance-ch, rand)) chance++;
+
+            for (int i = 0; i < chance; i++)
+            {
+                switch (rand.Next(2))
+                {
+                    case 0:
+                        S.Insert(rand.Next(0, S.Length - 1), getRandChar(rand, country == "Russia"));
+                        break;
+                    case 1:
+                        int index = rand.Next(0, S.Length - 2);
+                        S.Insert(index, S[rand.Next(0, S.Length - 1)].ToString());
+                        S.Remove(index);
+                        break;
+                    case 2:
+                        S.Remove(rand.Next(0, S.Length - 1));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return S;
+        }
+
+        private string getRandChar(Random rand, bool isEnUs = false)
+        {
+            string enUs = "abcdefghijklmnopqrstuvwxyz1234567890";
+            string ru = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя1234567890";
+
+            if (isEnUs)
+                return enUs[rand.Next(enUs.Length - 1)].ToString();
+            else
+                return ru[rand.Next(ru.Length - 1)].ToString();
+        }
+        static bool Test(double chance, Random rand)
+        {
+            return rand.NextDouble() < chance;
+        }
+        private TableRowModel makeRow(int seed, int page, int number, string country)
         {
             var row = new TableRowModel();
             row.RandomId = new Random(seed * (page + 1) * (number + 1)).Next();
