@@ -10,9 +10,16 @@ namespace RandomDataGenWebApp
         private SourceDataModel model;
         public DataGenerator()
         {
-            using (FileStream fs = new FileStream("DATABASE.json", FileMode.OpenOrCreate))
+            try
             {
-                model = JsonSerializer.Deserialize<SourceDataModel>(fs);
+                using (FileStream fs = new FileStream("DATABASE.json", FileMode.OpenOrCreate))
+                {
+                    model = JsonSerializer.Deserialize<SourceDataModel>(fs);
+                }
+            }
+            catch(Exception e)
+            {
+                // 
             }
         }
         public TableRowModel GetRow(int seed, int page, int number, string country, double errSmooth)
@@ -42,10 +49,12 @@ namespace RandomDataGenWebApp
                 switch (rand.Next(2))
                 {
                     case 0:
+                        if (S.Length < 2 || S.Length > 50)
+                            break;
                         S = S.Insert(rand.Next(0, S.Length - 1), getRandChar(rand, country == "Russia"));
                         break;
                     case 1:
-                        if (S.Length < 2)
+                        if (S.Length < 2 || S.Length > 50)
                             break;
 
                         int index = rand.Next(0, S.Length - 1);
@@ -134,7 +143,7 @@ namespace RandomDataGenWebApp
                     break;
                 case "UK":
                     row.Address =
-                        rand.Next(2550)
+                        rand.Next(2550) + " "
                         +
                         model.UK_streets[rand.Next(model.UK_streets.Length - 1)] + " "
                         +

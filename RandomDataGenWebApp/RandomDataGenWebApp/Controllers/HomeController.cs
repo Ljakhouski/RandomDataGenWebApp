@@ -28,27 +28,12 @@ namespace RandomDataGenWebApp.Controllers
         [HttpGet]
         public string Generate(int seed, int page, string country, double errVal)
         {
-
-           // JsonSelector.Select();
+            seed += 2;
             var arr = new TableRowModel[10];
-            for(int i = 0; i< arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-
-                arr[i] = /*new TableRowModel()
-                {
-                    Address = new Random(seed * (page +1)* (i+1)).Next().ToString(),
-                    Name = new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
-                    Number = page*10 + i,
-                    PhoneNumber = "+36" + new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
-                    RandomId = new Random(seed * (page + 1) * (i + 1)).Next()
-                };*/
-
-                 generator.GetRow(seed, page, i, country, errVal);
-
-                //string S_ = JsonSerializer.Serialize(arr[i]);
+                arr[i] = generator.GetRow(seed, page, i, country, errVal);
             }
-            
-            string S = JsonSerializer.Serialize(arr);
             return JsonSerializer.Serialize(arr);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

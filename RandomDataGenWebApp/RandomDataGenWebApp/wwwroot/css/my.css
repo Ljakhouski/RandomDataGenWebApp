@@ -1,6 +1,48 @@
-﻿namespace RandomDataGenWebApp.wwwroot.css
-{
-    public class my
-    {
-    }
+﻿div div {
+    margin: 20px;
+}
+
+.text-center {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.ctrl {
+    width: 200px;
+    position: relative;
+}
+
+.view {
+    margin: 30px;
+}
+
+input {
+    display: block;
+    width: 100%;
+}
+
+.btn {
+    width: 300px;
+    background-color:darkcyan;
+}
+
+.range {
+    margin: 30px;
+}
+
+.good {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid silver;
+}
+
+.good .option {
+    display: none;
+}
+
+.table table-dark {
+    margin: 200px;
 }

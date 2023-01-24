@@ -1,46 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<head>
+    <link rel="stylesheet" href="~/css/my.css" asp-append-version="true" />
+</head>
 
-
-<style>
-    div div {
-        margin: 10px;
-    }
-
-    .ctrl {
-        width: 200px;
-        position: relative;
-    }
-
-    input {
-        display: block;
-        width: 100%;
-    }
-
-    .good {
-        display: inline-block;
-        vertical-align: top;
-        width: 100px;
-        padding: 5px;
-        margin: 5px;
-        border: 1px solid silver;
-    }
-
-        .good .option {
-            display: none;
-        }
-
-    .table table-dark {
-        margin: 200px;
-    }
-</style>
 
 <div class="text-center">
     <div class="myPanel">
         <div>
             <label for="cars">Choose a country:</label>
-            <select name="country" id="country">
+            <select name="country" id="country" onchange="reset()">
                 <option value="USA">USA</option>
                 <option value="Russia">Russia</option>
                 <option value="UK">UK</option>
@@ -48,17 +18,17 @@
         </div>
 
         <div>
-            <span id="view">0</span>
+            <span id="view">Errors chance:</span>
             <input id="num" type=number min="0" max="1000" step="0.25" value="0">
             <input id="range" type="range" onchange="showVal(this.value)" min="0" max="10" step="0.25" value="0">
         </div>
 
         <div>
             <label> Seed: </label>
-            <input type="number" required id="seed_input" />
+            <input type="number" required id="seed_input" onchange="reset()"/>
         </div>
 
-        <button class="btn-primary" onclick="reset()"> Generate </button> <br /> <br />
+        <button  class="btn btn-primary" onclick="randClick()"> Random </button> <br /> <br />
 
         <table class="table table-dark" id="myTable">
             <thead>
@@ -109,7 +79,11 @@
         document.getElementById('range').value = numVal / 100;
         reset();
     }
-
+    function randClick()
+    {
+        document.getElementById("seed_input").value = Math.trunc(Math.random()*1000);
+        reset();
+    }
     function generate() {
         $.ajax({
             type: "get",
@@ -117,7 +91,8 @@
             data: {
                 seed: document.getElementById("seed_input").value, // < note use of 'this' here
                 country: document.getElementById("country").value,
-                errVal: document.getElementById("range").value,
+               // errVal: document.getElementById("range").value,
+                errVal: document.getElementById("num").value,
                 page: currentPage
             },
             success: function (data, textstatus) {
@@ -156,7 +131,7 @@
     }
     function reset()
     {
-        alert("!");
+        //alert("!");
         currentPage=0;
         $("#myTable").find("tr:gt(0)").remove();
         generate();
