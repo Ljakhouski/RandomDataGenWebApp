@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ztHgF0HmsSvRnZETlNLWgSzfWcDKcQ7Aix02VkMMWfR4nCHEJhHMz+nw/sUt2bsnTMDsOZ/qL4oGFRbMIDHLeQ==",
+  "dgSpecHash": "g0fbVrlRJx93DBWKiODQs2XTdwt+HNLYfB1luh1xc3vI/by2gtD2ksT0utTfwMCny6/Iga62U64YofgLZQ8ZbQ==",
   "success": true,
-  "projectFilePath": "C:\\source\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp.csproj",
+  "projectFilePath": "C:\\source\\try_2\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp\\RandomDataGenWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
   ],

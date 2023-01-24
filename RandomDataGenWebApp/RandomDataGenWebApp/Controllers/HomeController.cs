@@ -8,6 +8,7 @@ namespace RandomDataGenWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private DataGenerator generator = new DataGenerator();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -27,20 +28,24 @@ namespace RandomDataGenWebApp.Controllers
         [HttpGet]
         public string Generate(int seed, int page, string country, int errVal)
         {
+
            // JsonSelector.Select();
             var arr = new TableRowModel[10];
             for(int i = 0; i< arr.Length; i++)
             {
-                
-                arr[i] = new TableRowModel()
+
+                arr[i] = /*new TableRowModel()
                 {
                     Address = new Random(seed * (page +1)* (i+1)).Next().ToString(),
                     Name = new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
                     Number = page*10 + i,
                     PhoneNumber = "+36" + new Random(seed * (page + 1) * (i + 1)).Next().ToString(),
                     RandomId = new Random(seed * (page + 1) * (i + 1)).Next()
-                };
-                string S_ = JsonSerializer.Serialize(arr[i]);
+                };*/
+
+                 generator.GetRow(seed, page, i, country, errVal);
+
+                //string S_ = JsonSerializer.Serialize(arr[i]);
             }
             
             string S = JsonSerializer.Serialize(arr);

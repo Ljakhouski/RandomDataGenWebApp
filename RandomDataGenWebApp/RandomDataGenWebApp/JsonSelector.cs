@@ -12,15 +12,15 @@ namespace RandomDataGenWebApp
             //var assembly = Assembly.GetExecutingAssembly();
             //var resourceName = "EmbeddedResource.Data.foreign_names.json";
 
-           /* using (Stream stream = new FileStream(""))
-            using (StreamReader reader = new StreamReader(""))
-            {
-                var myDeserializedClass = JsonSerializer.DeserializeAsync<List<Root>>(stream);
+            /* using (Stream stream = new FileStream(""))
+             using (StreamReader reader = new StreamReader(""))
+             {
+                 var myDeserializedClass = JsonSerializer.DeserializeAsync<List<Root>>(stream);
 
-                var res = myDeserializedClass.Result;
-                //string jsonFile = reader.ReadToEnd(); //Make string equal to full file
-            }*/
-
+                 var res = myDeserializedClass.Result;
+                 //string jsonFile = reader.ReadToEnd(); //Make string equal to full file
+             }*/
+            
             using (StreamReader r = new StreamReader("foreign_names.json"))
             {
                 string json = r.ReadToEnd();
@@ -29,7 +29,7 @@ namespace RandomDataGenWebApp
                 var new_ = from item in items where item.origin.Contains("American") select item.name;
 
                 var v = new SourceDataModel();
-                v.UK_names = (List<string>)new_;
+               // v.UK_names = (List<string>)new_;
                 v.USA_names = v.UK_names;
 
 
